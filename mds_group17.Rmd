@@ -28,8 +28,6 @@ capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.t
 
 
 ### R (Base R & dplyr)
-
-
 ```{r}
 # Libraries
 library(MASS)
