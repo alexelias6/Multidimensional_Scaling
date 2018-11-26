@@ -18,5 +18,5 @@ metric MDS.
 The data used in the following example comes from the Cars93 dataset available in the R's MASS package. The observations of
 the dataset are 93 randomly selected 1993 passenger car models listed in the Consumer Reports issue and PACE Buying Guide.
 Additional information contained in the dataset includes various automobile metrics such as price, horsepower, and luggage 
-capacity.
+capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.txt?fbclid=IwAR19EJDNQzMMQOBe6ZC4t4li0zx0UpkDBAoSWDNWa3T54JXc-yfpPiPIqsk)
 
