@@ -5,7 +5,7 @@ date: "November 25, 2018"
 output: html_document
 ---
 
-#Introduction to Multidimensional Scaling
+# Introduction to Multidimensional Scaling
 
 Multidimensional scaling (MDS) is a useful visualization technique that displays information given in a distance matrix.
 “In general, the goal of the analysis is to detect meaningful underlying dimensions that allow the researcher to explain 
@@ -13,10 +13,24 @@ observed similarities or dissimilarities” (quote). Simply put, objects that ha
 than objects that have longer distances. There are two approaches to MDS: metric and nonmetric and this tutorial focuses on 
 metric MDS. 
 
-#Data Description
+# Data Description
 
 The data used in the following example comes from the Cars93 dataset available in the R's MASS package. The observations of
 the dataset are 93 randomly selected 1993 passenger car models listed in the Consumer Reports issue and PACE Buying Guide.
 Additional information contained in the dataset includes various automobile metrics such as price, horsepower, and luggage 
 capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.txt?fbclid=IwAR19EJDNQzMMQOBe6ZC4t4li0zx0UpkDBAoSWDNWa3T54JXc-yfpPiPIqsk)
+
+
+## Implementation {.tabset .tabset-fade}
+
+### R (smacof & data.table)
+
+
+
+### R (Base R & dplyr)
+
+
+
+### Stata
+
 
