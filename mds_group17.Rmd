@@ -229,6 +229,7 @@ ggplot(correlation_df, aes(x=Z1,y=Z2),main='Main') +
 https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1
 
 ## To Do
-Collaborate with code
-Add text to examples
-Make graphs visually appealing
+* Collaborate with code
+* Add text to examples
+* Make graphs visually appealing
+* Add references
