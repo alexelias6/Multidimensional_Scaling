@@ -5,7 +5,7 @@ date: "November 25, 2018"
 output: html_document
 ---
 
-# Introduction to Multidimensional Scaling
+## Introduction to Multidimensional Scaling
 
 Multidimensional scaling (MDS) is a useful visualization technique that displays information given in a distance matrix.
 “In general, the goal of the analysis is to detect meaningful underlying dimensions that allow the researcher to explain 
@@ -13,7 +13,7 @@ observed similarities or dissimilarities” (quote). Simply put, objects that ha
 than objects that have longer distances. There are two approaches to MDS: metric and nonmetric and this tutorial focuses on 
 metric MDS. 
 
-# Data Description
+## Data Description
 
 The data used in the following example comes from the Cars93 dataset available in the R's MASS package. The observations of
 the dataset are 93 randomly selected 1993 passenger car models listed in the Consumer Reports issue and PACE Buying Guide.
@@ -26,7 +26,6 @@ capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.t
 ### R (smacof & data.table)
 ```{r, message=FALSE}
 # Libraries 
-
 library(MASS)
 library(tidyverse)
 library(ggplot2)
@@ -36,7 +35,6 @@ library(smacof)
 
 ```{r}
 # Get data
-
 Cars93 = as.data.table(MASS::Cars93)
 
 Cars93 = Cars93[!is.na(Rear.seat.room) & !is.na(Luggage.room)]
@@ -56,7 +54,6 @@ for (method in c('euclidean', 'manhattan', 'maximum')) {
 distance_correlation = sqrt(2*(1-cor(t(Cars93_cont_scaled))))
 
 # Euclidean Distance
-
 torgerson_euclidean = torgerson(distance_euclidean)
 df_euclidean = data.frame(
   Z1=torgerson_euclidean[,1], Z2=torgerson_euclidean[,2], 
@@ -72,7 +69,6 @@ ggplot(df_euclidean, aes(x=Z1,y=Z2),main='Main') +
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 
 # Manhattan Distance
-
 torgerson_manhattan = torgerson(distance_manhattan)
 df_manhattan = data.frame(
   Z1=torgerson_manhattan[,1], Z2=torgerson_manhattan[,2], 
@@ -88,7 +84,6 @@ ggplot(df_manhattan, aes(x=Z1,y=Z2),main='Main') +
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 
 # Maximum Distance 
-
 torgerson_maximum = torgerson(distance_maximum)
 df_maximum = data.frame(
   Z1=torgerson_maximum[,1], Z2=torgerson_maximum[,2], 
@@ -104,7 +99,6 @@ ggplot(df_maximum, aes(x=Z1,y=Z2),main='Main') +
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 
 # Correlation
-
 torgerson_correlation = torgerson(distance_correlation)
 df_correlation = data.frame(
   Z1=torgerson_correlation[,1], Z2=torgerson_correlation[,2], 
@@ -227,4 +221,9 @@ ggplot(correlation_df, aes(x=Z1,y=Z2),main='Main') +
 ### Stata
 
 
-# References
+## References
+
+## To Do
+Collaborate with code
+Add text to examples
+Make graphs visually appealing
