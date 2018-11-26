@@ -1,0 +1,13 @@
+---
+title: "Multidimensional Scaling"
+author: "Cara Cannella, Alexandra Elias, Alex Kremzier"
+date: "November 25, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# 80: --------------------------------------------------------------------------
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
