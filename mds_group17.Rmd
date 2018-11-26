@@ -4,10 +4,10 @@ author: "Cara Cannella, Alexandra Elias, Alex Kremzier"
 date: "November 25, 2018"
 output: html_document
 ---
+#Introduction to Multidimensional Scaling
 
-```{r setup, include=FALSE}
-# 80: --------------------------------------------------------------------------
-knitr::opts_chunk$set(echo = FALSE)
-```
 
+#Data Description
+
+The data used in the following example comes from the Cars93 dataset available in the R's MASS package. The observations of the dataset are 93 randomly selected 1993 passenger car models listed in the Consumer Reports issue and PACE Buying Guide. Additional information contained in the dataset includes various automobile metrics such as price, horsepower, and luggage capacity.
 
