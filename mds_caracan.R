@@ -21,12 +21,13 @@ Cars93 = as.data.table(MASS::Cars93)
 
 Cars93 = Cars93[!is.na(Rear.seat.room) & !is.na(Luggage.room)]
 
-Cars93_cont_scaled = scale(Cars93[,.(Min.Price, Price, Max.Price,
+Cars93_cont_scaled = Cars93[,.(Min.Price, Price, Max.Price,
                                MPG.city, MPG.highway, EngineSize,
                                Horsepower, RPM, Rev.per.mile,
                                Length, Wheelbase, Width,
                                Turn.circle, Rear.seat.room,
-                               Luggage.room)])
+                               Luggage.room)] %>%
+                      scale()
 
 for (method in c('euclidean', 'manhattan', 'maximum')) {
   assign(paste("distance", method, sep='_'), dist(Cars93_cont_scaled, method = method))
