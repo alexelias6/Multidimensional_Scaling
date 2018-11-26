@@ -1,5 +1,5 @@
 ## 
-## Mutidimensional Scaling Tutorial
+## Mutidimensional Scaling Tutorial: smacof and data.table
 ## Author: Cara Cannella, caracan@umich.edu
 ##
 
