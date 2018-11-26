@@ -6,12 +6,16 @@ output: html_document
 ---
 
 ## Introduction to Multidimensional Scaling
-
-Multidimensional scaling (MDS) is a useful visualization technique that displays information given in a distance matrix.
-“In general, the goal of the analysis is to detect meaningful underlying dimensions that allow the researcher to explain 
-observed similarities or dissimilarities” (quote). Simply put, objects that have small distances on the graph are more similar 
-than objects that have longer distances. There are two approaches to MDS: metric and nonmetric and this tutorial focuses on 
-metric MDS. 
+Multidimensional scaling (MDS) is a dimension reduction technique that is most useful for visualizing 
+high-dimensional data during the exploratory phase. MDS "represents measurements of similarity 
+(or dissimilarity) among pairs of objects as distances between points." Simply put, objects closer
+together (in terms of MDS coordinates) are more similar than objects farther apart. There are two types
+of MDS: metric, which deals with quantitative dissimilarities, and non-metric, which deals with qualitative
+(ordinal) dissimilarities. Within metric MDS, classical MDS involves minimizing a loss function called 
+Strain, which is equivalent to performing eigenvalue decomposition on the Gram matrix of the dissimilarity 
+measure. When the dissimilarity measure is Euclidean distance, classical MDS is the same as 
+Principal Components Analysis. However, the dissimilarity measure need not be Euclidean 
+distance, as we demonstrate below.
 
 ## Data Description
 
