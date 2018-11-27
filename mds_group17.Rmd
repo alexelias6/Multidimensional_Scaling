@@ -243,7 +243,7 @@ mds `varlist', id(model) std(`varlist') noplot
 mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
 ```
 
-![Euclidean](./stata_euclidean_MDS.png)
+![Euclidean](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_euclidean_MDS.png)
 
 ```stata3
 //MDS: Manhattan distances
@@ -251,7 +251,7 @@ mds `varlist', id(model) std(`varlist') measure(manhattan) noplot
 mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
 ```
 
-![Manhattan](./stata_manhattan_MDS.png)
+![Manhattan](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_manhattan_MDS.png)
 
 ```stata4
 //MDS: Maximum distances
@@ -259,7 +259,7 @@ mds `varlist', id(model) std(`varlist') measure(maximum) noplot
 mdsconfig, autoaspect xnegate ynegate msize(vsmall) mlabsize(vsmall)
 ```
 
-![Maximum](./stata_maximum_MDS.png)
+![Maximum](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_maximum_MDS.png)
 
 ```stata5
 //MDS: Correlation distances
@@ -267,7 +267,7 @@ mds `varlist', id(model) std(`varlist') measure(correlation) noplot
 mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
 ```
 
-![Correlation](./stata_correlation_MDS.png)
+![Correlation](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_correlation_MDS.png)
 
 ## References
 https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1
