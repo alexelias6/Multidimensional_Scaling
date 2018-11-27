@@ -223,7 +223,51 @@ ggplot(correlation_df, aes(x=Z1,y=Z2),main='Main') +
 ```
 
 ### Stata
+```stata1
+//Import data 
+import delim using "Cars93.csv", varnames(1) clear
 
+//Drop observations with missing values in rearseatroom or luggageroom
+drop if rearseatroom == "NA" | luggageroom == "NA"
+destring rearseatroom luggageroom, replace
+
+//Macro of continuous variables
+local varlist minprice price maxprice mpgcity mpghighway enginesize /*
+	*/ horsepower rpm revpermile fueltankcapacity length wheelbase width /*
+	*/ turncircle rearseatroom luggageroom weight
+```
+
+```stata2
+//MDS: Euclidean distances
+mds `varlist', id(model) std(`varlist') noplot
+mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
+```
+
+![Euclidean](./stata_euclidean_MDS.png)
+
+```stata3
+//MDS: Manhattan distances
+mds `varlist', id(model) std(`varlist') measure(manhattan) noplot
+mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
+```
+
+![Manhattan](./stata_manhattan_MDS.png)
+
+```stata4
+//MDS: Maximum distances
+mds `varlist', id(model) std(`varlist') measure(maximum) noplot
+mdsconfig, autoaspect xnegate ynegate msize(vsmall) mlabsize(vsmall)
+```
+
+![Maximum](./stata_maximum_MDS.png)
+
+```stata5
+//MDS: Correlation distances
+mds `varlist', id(model) std(`varlist') measure(correlation) noplot
+mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
+```
+
+![Correlation](./stata_correlation_MDS.png)
 
 ## References
 https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1
