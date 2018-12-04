@@ -23,7 +23,7 @@ The data used in the following example comes from the Cars93 dataset available i
 the dataset are 93 randomly selected 1993 passenger car models listed in the Consumer Reports issue and PACE Buying Guide.
 Additional information contained in the dataset includes various automobile metrics such as price, horsepower, and luggage 
 capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.txt?fbclid=IwAR19EJDNQzMMQOBe6ZC4t4li0zx0UpkDBAoSWDNWa3T54JXc-yfpPiPIqsk)
-
+Our three examples will involve briefly cleaning the data, calculating distances among our chosen variables in four different ways, performing classical MDS, and plotting the resulting coordinates in two-dimensional space. The four measures of distance we will be using are Euclidean, Manhattan, Maximum, and Correlation.
 
 ## Implementation {.tabset .tabset-fade}
 
@@ -270,7 +270,9 @@ mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
 ![Correlation](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_correlation_MDS.png)
 
 ## References
-https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1
+General MDS background: https://en.wikipedia.org/wiki/Multidimensional_scaling
+General MDS background: https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1
+Distance definitions: https://www.stata.com/manuals13/mvmds.pdf
 
 ## To Do
 * Collaborate with code
