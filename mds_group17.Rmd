@@ -35,7 +35,7 @@ Maximum distance is calculated as:
 
 The correlation-based measure of dissimilarity used by Stata (and implemented by us in R) is calculated as:
 
-The variables we will be using for MDS are presented in the table below:
+The variables we will be using for MDS are presented in Table 1.
 
 ## Implementation {.tabset .tabset-fade}
 
