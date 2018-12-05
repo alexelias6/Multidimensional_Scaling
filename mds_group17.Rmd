@@ -5,7 +5,6 @@ date: "November 25, 2018"
 output: html_document
 ---
 
-
 ## Introduction to Multidimensional Scaling
 Multidimensional scaling (MDS) is a dimension reduction technique that is most useful for visualizing 
 high-dimensional data during the exploratory phase. MDS "represents measurements of similarity 
@@ -13,9 +12,9 @@ high-dimensional data during the exploratory phase. MDS "represents measurements
 together (in terms of MDS coordinates) are more similar than objects farther apart. There are two types
 of MDS: metric, which deals with quantitative dissimilarities, and non-metric, which deals with qualitative
 (ordinal) dissimilarities. Within metric MDS, classical MDS involves minimizing a loss function called 
-Strain, which is equivalent to performing eigenvalue decomposition on the Gram matrix of the dissimilarity 
-measure. When the dissimilarity measure is Euclidean distance, classical MDS is the same as 
-Principal Components Analysis. However, the dissimilarity measure need not be Euclidean 
+Strain, which is equivalent to performing eigenvalue decomposition on a Gram matrix constructed
+from the dissimilarity measure. When the dissimilarity measure is Euclidean distance, classical MDS is 
+the same as Principal Components Analysis. However, the dissimilarity measure need not be Euclidean 
 distance, as we demonstrate below.
 
 ## Data Description
@@ -25,6 +24,18 @@ the dataset are 93 randomly selected 1993 passenger car models listed in the Con
 Additional information contained in the dataset includes various automobile metrics such as price, horsepower, and luggage 
 capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.txt?fbclid=IwAR19EJDNQzMMQOBe6ZC4t4li0zx0UpkDBAoSWDNWa3T54JXc-yfpPiPIqsk)
 
+Our three examples will involve briefly cleaning the data, calculating dissimilarities among our chosen variables in four 
+different ways, performing classical MDS, and plotting the resulting coordinates in two-dimensional space. 
+The four measures of dissimilarity we will be using are Euclidean distance, Manhattan distance, Maximum distance, 
+and a dissimilarity measure based on the correlation matrix. Euclidean distance is calculated as:
+
+Manhattan distance is calculated as:
+
+Maximum distance is calculated as:
+
+The correlation-based measure of dissimilarity used by Stata (and implemented by us in R) is calculated as:
+
+The variables we will be using for MDS are presented in Table 1.
 
 ```{r variables, include = FALSE }
 
@@ -34,7 +45,7 @@ variables = read.csv('mds_variables.csv')
 
 ```{r, table}
 library(knitr)
-kable(variables, caption = "Variables")
+kable(variables)
 ```
 
 ## Implementation {.tabset .tabset-fade}
@@ -52,9 +63,7 @@ library(smacof)
 ```{r}
 # Get data
 Cars93 = as.data.table(MASS::Cars93)
-
 Cars93 = Cars93[!is.na(Rear.seat.room) & !is.na(Luggage.room)]
-
 Cars93_cont_scaled = Cars93[,.(Min.Price, Price, Max.Price,
                                MPG.city, MPG.highway, EngineSize,
                                Horsepower, RPM, Rev.per.mile,
@@ -62,13 +71,10 @@ Cars93_cont_scaled = Cars93[,.(Min.Price, Price, Max.Price,
                                Turn.circle, Rear.seat.room,
                                Luggage.room)] %>%
                       scale()
-
 for (method in c('euclidean', 'manhattan', 'maximum')) {
   assign(paste("distance", method, sep='_'), dist(Cars93_cont_scaled, method = method))
 }
-
 distance_correlation = sqrt(2*(1-cor(t(Cars93_cont_scaled))))
-
 # Euclidean Distance
 torgerson_euclidean = torgerson(distance_euclidean)
 df_euclidean = data.frame(
@@ -83,7 +89,6 @@ df_euclidean = data.frame(
 ggplot(df_euclidean, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
-
 # Manhattan Distance
 torgerson_manhattan = torgerson(distance_manhattan)
 df_manhattan = data.frame(
@@ -98,7 +103,6 @@ df_manhattan = data.frame(
 ggplot(df_manhattan, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
-
 # Maximum Distance 
 torgerson_maximum = torgerson(distance_maximum)
 df_maximum = data.frame(
@@ -113,7 +117,6 @@ df_maximum = data.frame(
 ggplot(df_maximum, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
-
 # Correlation
 torgerson_correlation = torgerson(distance_correlation)
 df_correlation = data.frame(
@@ -128,7 +131,6 @@ df_correlation = data.frame(
 ggplot(df_correlation, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
-
 ```
 
 
@@ -139,14 +141,11 @@ library(MASS)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
-
 # Get data
 cars93 = 
   as_tibble(Cars93)
-
 # Clean data
 cars93 = filter(cars93,!is.na(Rear.seat.room) & !is.na(Luggage.room))
-
 cars93_scaled = 
   cars93 %>%
   select(Min.Price, Price, Max.Price,
@@ -157,13 +156,10 @@ cars93_scaled =
          Luggage.room) %>%
   scale() %>%
   as_tibble()
-
 for (method in c('euclidean', 'manhattan', 'maximum')) {
   assign(paste("distance", method, sep='_'), dist(cars93_scaled, method = method))
 }
-
 distance_correlation = sqrt(2*(1-cor(t(cars93_scaled))))
-
 # Euclidean Distance
 euclidean = cmdscale(distance_euclidean, k=2)
   
@@ -176,14 +172,11 @@ euclidean_df = data_frame(
   Cylinders=cars93$Cylinders,
   Passengers=cars93$Passengers,
   Origin=cars93$Origin)
-
 ggplot(euclidean_df, aes(x=Z1,y=Z2), main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
-
 # Manhattan Distance
 manhattan = cmdscale(distance_manhattan, k=2)
-
 manhattan_df = data.frame(
   Z1=manhattan[,1], Z2=manhattan[,2], 
   Manufacturer=cars93$Manufacturer,
@@ -193,14 +186,11 @@ manhattan_df = data.frame(
   Cylinders=cars93$Cylinders,
   Passengers=cars93$Passengers,
   Origin=cars93$Origin)
-
 ggplot(manhattan_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
-
 # Maximum Distance 
 maximum = cmdscale(distance_maximum, k=2)
-
 maximum_df = data.frame(
   Z1=maximum[,1], Z2=maximum[,2], 
   Manufacturer=cars93$Manufacturer,
@@ -210,14 +200,11 @@ maximum_df = data.frame(
   Cylinders=cars93$Cylinders,
   Passengers=cars93$Passengers,
   Origin=cars93$Origin)
-
 ggplot(maximum_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
-
 # Correlation
 correlation = cmdscale(distance_correlation, k=2)
-
 correlation_df = data.frame(
   Z1=correlation[,1], Z2=correlation[,2], 
   Manufacturer=cars93$Manufacturer,
@@ -227,22 +214,18 @@ correlation_df = data.frame(
   Cylinders=cars93$Cylinders,
   Passengers=cars93$Passengers,
   Origin=cars93$Origin)
-
 ggplot(correlation_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
-
 ```
 
 ### Stata
 ```stata1
 //Import data 
 import delim using "Cars93.csv", varnames(1) clear
-
 //Drop observations with missing values in rearseatroom or luggageroom
 drop if rearseatroom == "NA" | luggageroom == "NA"
 destring rearseatroom luggageroom, replace
-
 //Macro of continuous variables
 local varlist minprice price maxprice mpgcity mpghighway enginesize /*
 	*/ horsepower rpm revpermile fueltankcapacity length wheelbase width /*
@@ -282,7 +265,10 @@ mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
 ![Correlation](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_correlation_MDS.png)
 
 ## References
+https://en.wikipedia.org/wiki/Multidimensional_scaling
 https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1
+http://www-stat.wharton.upenn.edu/~buja/PAPERS/paper-mds-jcgs.pdf
+https://www.stata.com/manuals13/mvmds.pdf
 
 ## To Do
 * Collaborate with code
