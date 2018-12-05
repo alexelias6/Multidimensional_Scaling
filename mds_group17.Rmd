@@ -33,7 +33,7 @@ Manhattan distance is calculated as:
 
 Maximum distance is calculated as:
 
-Our "correlation" dissimilarity is calculated as:
+The correlation-based measure of dissimilarity used by Stata (and implemented by us in R) is calculated as:
 
 The variables we will be using for MDS are presented in the table below:
 
