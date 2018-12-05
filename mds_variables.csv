@@ -1,0 +1,16 @@
+Variable,Description
+EngineSize,Engine size in liters
+Horsepower,Maximum horsepower
+Length,Length in inches
+Luggage.room,Luggage capacity in cubic feet
+Max.Price,"Price for a premium version in $1,000"
+Min.Price,"Price for a basic version in $1,000"
+MPG.city,City miles per US gallon by EPA rating
+MPG.highway,Highway miles per US gallon by EPA rating
+Price,"Average of minimum and maximum price in $1,000"
+Rear.seat.room,Rear seat room in inches
+Rev.per.mile,Engine revolutions per mile in highest gear
+RPM,Revs per minute at maximum horsepower
+Turn.circle,U-turn space in feet
+Wheelbase,Wheelbase in inches
+Width,Width in inches
