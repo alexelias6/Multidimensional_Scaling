@@ -12,9 +12,9 @@ high-dimensional data during the exploratory phase. MDS "represents measurements
 together (in terms of MDS coordinates) are more similar than objects farther apart. There are two types
 of MDS: metric, which deals with quantitative dissimilarities, and non-metric, which deals with qualitative
 (ordinal) dissimilarities. Within metric MDS, classical MDS involves minimizing a loss function called 
-Strain, which is equivalent to performing eigenvalue decomposition on the Gram matrix of the dissimilarity 
-measure. When the dissimilarity measure is Euclidean distance, classical MDS is the same as 
-Principal Components Analysis. However, the dissimilarity measure need not be Euclidean 
+Strain, which is equivalent to performing eigenvalue decomposition on a Gram matrix constructed
+from the dissimilarity measure. When the dissimilarity measure is Euclidean distance, classical MDS is 
+the same as Principal Components Analysis. However, the dissimilarity measure need not be Euclidean 
 distance, as we demonstrate below.
 
 ## Data Description
@@ -24,9 +24,9 @@ the dataset are 93 randomly selected 1993 passenger car models listed in the Con
 Additional information contained in the dataset includes various automobile metrics such as price, horsepower, and luggage 
 capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.txt?fbclid=IwAR19EJDNQzMMQOBe6ZC4t4li0zx0UpkDBAoSWDNWa3T54JXc-yfpPiPIqsk)
 
-Our three examples will involve briefly cleaning the data, calculating distances among our chosen variables in four 
+Our three examples will involve briefly cleaning the data, calculating dissimilarities among our chosen variables in four 
 different ways, performing classical MDS, and plotting the resulting coordinates in two-dimensional space. 
-The four measures of distance we will be using are Euclidean, Manhattan, Maximum, and Correlation.
+The four measures of dissimilarity we will be using are Euclidean distance, Manhattan distance, Maximum distance, and a dissimilarity measure based on the correlation matrix.
 
 ## Implementation {.tabset .tabset-fade}
 
@@ -273,9 +273,10 @@ mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
 ![Correlation](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_correlation_MDS.png)
 
 ## References
-General MDS background: https://en.wikipedia.org/wiki/Multidimensional_scaling
-General MDS background: https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1
-Distance definitions: https://www.stata.com/manuals13/mvmds.pdf
+https://en.wikipedia.org/wiki/Multidimensional_scaling
+https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1
+http://www-stat.wharton.upenn.edu/~buja/PAPERS/paper-mds-jcgs.pdf
+https://www.stata.com/manuals13/mvmds.pdf
 
 ## To Do
 * Collaborate with code
