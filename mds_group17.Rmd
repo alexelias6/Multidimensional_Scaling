@@ -26,7 +26,8 @@ capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.t
 
 Our three examples will involve briefly cleaning the data, calculating dissimilarities among our chosen variables in four 
 different ways, performing classical MDS, and plotting the resulting coordinates in two-dimensional space. 
-The four measures of dissimilarity we will be using are Euclidean distance, Manhattan distance, Maximum distance, and a dissimilarity measure based on the correlation matrix. Euclidean distance is calculated as:
+The four measures of dissimilarity we will be using are Euclidean distance, Manhattan distance, Maximum distance, 
+and a dissimilarity measure based on the correlation matrix. Euclidean distance is calculated as:
 
 Manhattan distance is calculated as:
 
