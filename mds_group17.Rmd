@@ -335,8 +335,8 @@ R's `smacof` and Stata's `mds`, can perform a different type of metric MDS calle
 "modern MDS." This involves minimizing a loss function called Stress instead of Strain.
 
 ## References
-https://en.wikipedia.org/wiki/Multidimensional_scaling
-https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1
-http://www-stat.wharton.upenn.edu/~buja/PAPERS/paper-mds-jcgs.pdf
+https://en.wikipedia.org/wiki/Multidimensional_scaling  
+https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1  
+http://www-stat.wharton.upenn.edu/~buja/PAPERS/paper-mds-jcgs.pdf  
 https://www.stata.com/manuals13/mvmds.pdf
 
