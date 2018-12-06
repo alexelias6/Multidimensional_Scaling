@@ -80,7 +80,6 @@ ggplot(manhattan_df, aes(x=Z1,y=Z2),main='Main') +
 # 80: --------------------------------------------------------------------------
 
 # Maximum Distance 
-
 maximum = cmdscale(distance_maximum, k=2)
 
 maximum_df = data.frame(
@@ -100,7 +99,6 @@ ggplot(maximum_df, aes(x=Z1,y=Z2),main='Main') +
 # 80: --------------------------------------------------------------------------
 
 # Correlation
-
 correlation = cmdscale(distance_correlation, k=2)
 
 correlation_df = data.frame(
