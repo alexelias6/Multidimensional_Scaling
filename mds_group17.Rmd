@@ -15,13 +15,17 @@ of MDS: metric, which deals with quantitative dissimilarities, and non-metric, w
 Strain, which is equivalent to performing eigenvalue decomposition on a Gram matrix constructed
 from the dissimilarity measure. When the dissimilarity measure is Euclidean distance, classical MDS is 
 the same as Principal Components Analysis. However, the dissimilarity measure need not be Euclidean 
-distance, as we demonstrate below.
+distance, as we demonstrate below. 
+
+In this tutorial, we will use two R functions, `torgerson` from the `smacof` package and `cmdscale` from 
+the `stats` package (which is available in base R), plus the `mds` command from Stata, to perform 
+classical MDS.
 
 ## Data Description
 
-The data used in the following example comes from the Cars93 dataset available in the R's MASS package. The observations of
+The data used in the following examples come from the Cars93 dataset available in R's `MASS` package. The observations of
 the dataset are 93 randomly selected 1993 passenger car models listed in the Consumer Reports issue and PACE Buying Guide.
-Additional information contained in the dataset includes various automobile metrics such as price, horsepower, and luggage 
+Information contained in the dataset includes various automobile metrics such as price, horsepower, and luggage 
 capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.txt?fbclid=IwAR19EJDNQzMMQOBe6ZC4t4li0zx0UpkDBAoSWDNWa3T54JXc-yfpPiPIqsk)
 
 Our three examples will involve briefly cleaning the data, calculating dissimilarities among our chosen variables in four 
@@ -63,7 +67,7 @@ kable(variables)
 ## Implementation {.tabset .tabset-fade}
 
 ### R (smacof & data.table)
-In this section we will use R packages smacof and data.table to perform MDS on the Cars93 dataset. The smacof package is used to implement various approaches for multidimensional scaling while data.table is used for data manipulation. First, we load the appropriate libraries. 
+In this section we will use R packages `smacof` and `data.table` to perform MDS on the Cars93 dataset. The `smacof` package is used to implement various approaches for multidimensional scaling while `data.table` is used for data manipulation. First, we load the appropriate libraries. 
 ```{r, message=FALSE}
 # Libraries 
 library(MASS)
@@ -72,16 +76,17 @@ library(ggplot2)
 library(data.table)
 library(smacof)
 ```
-The dataset for this example is stored in the MASS package. The following code loads the data in as class data.table which allows for data manipulation using the data.table package.
+The dataset for this example is stored in the MASS package. The following code loads the data in as class data.table which allows for data manipulation using the `data.table` package.
 ```{r}
 # Get data
 Cars93 = as.data.table(MASS::Cars93)
 ```
-In order to incorporate information about rear seat room and luggage capacity, vans and two-seater vehicles are excluded from the dataset. These are the only types of vehicles missing these values.
+The only continuous variables with missing values are Rear.seat.room and Luggage.room. We drop the observations containing these
+missing values.
 ```{r}
 Cars93 = Cars93[!is.na(Rear.seat.room) & !is.na(Luggage.room)]
 ```
-Next, standardize the variables using the scale() function to change all measures to the same scale.
+Next, we standardize the variables using the scale() function to give all variables equal weighting.
 ```{r}
 Cars93_cont_scaled = Cars93[,.(Min.Price, Price, Max.Price,
                                MPG.city, MPG.highway, EngineSize,
@@ -91,7 +96,8 @@ Cars93_cont_scaled = Cars93[,.(Min.Price, Price, Max.Price,
                                Luggage.room)] %>%
                       scale()
 ```
-Then calculate the dissimilarity matrix of your choosing. The code below computes four different dissimilarity matrices. Any of these four measures of distance can be used for MSD. 
+Then we create different types of dissimilarity matrices using the code below. Any of these dissimilarity measures
+can be used for MDS. 
 ```{r}
 for (method in c('euclidean', 'manhattan', 'maximum')) {
   assign(paste("distance", method, sep='_'), dist(Cars93_cont_scaled, method = method))
@@ -99,7 +105,11 @@ for (method in c('euclidean', 'manhattan', 'maximum')) {
 
 distance_correlation = sqrt(2*(1-cor(t(Cars93_cont_scaled))))
 ```
-Lastly, perform MDS using the torgerson() function from the smacof package. This function performs classical MDS and takes the dissimilarity matrix as its argument. It may be useful to note that torgeson() has an optional argument to specify the dimensions of the resulting coordinates. We chose the default of 2 dimensions because it is easiest to visualize. However, using higher dimensions can improve fit. The code below performs MDS using Euclidian distance.
+Lastly, we perform MDS using the `torgerson` function from the `smacof` package. This function takes the dissimilarity 
+matrix as its argument and performs classical MDS. It is worth noting that `torgeson` has an optional argument, 
+p, which is used to specify the dimensionality of the resulting coordinates. We chose the default of 2 dimensions because 
+it is easiest to visualize. However, using more dimensions can better approximate the original data. The code below performs 
+MDS using Euclidian distance.
 ```{r}
 # Euclidean Distance
 torgerson_euclidean = torgerson(distance_euclidean)
@@ -150,7 +160,7 @@ ggplot(df_maximum, aes(x=Z1,y=Z2),main='Main') +
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
-The code below performs MDS using correlation.
+The code below performs MDS using the correlation-based dissimilarity measure.
 ```{r}
 # Correlation
 torgerson_correlation = torgerson(distance_correlation)
@@ -306,8 +316,5 @@ http://www-stat.wharton.upenn.edu/~buja/PAPERS/paper-mds-jcgs.pdf
 https://www.stata.com/manuals13/mvmds.pdf
 
 ## To Do
-* Collaborate with code
-* Add text to examples
 * Make graphs visually appealing
-* Add references
 
