@@ -25,7 +25,7 @@ Cars93_cont_scaled = Cars93[,.(Min.Price, Price, Max.Price,
                                Horsepower, RPM, Rev.per.mile,
                                Length, Wheelbase, Width,
                                Turn.circle, Rear.seat.room,
-                               Luggage.room)]) %>% scale()
+                               Luggage.room)] %>% scale()
 
 for (method in c('euclidean', 'manhattan', 'maximum')) {
   assign(paste("distance", method, sep='_'), dist(Cars93_cont_scaled, method = method))
