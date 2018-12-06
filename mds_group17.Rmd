@@ -5,7 +5,7 @@ date: "December 7, 2018"
 output: html_document
 ---
 
-## Introduction to Multidimensional Scaling
+## Introduction to (Classical) Multidimensional Scaling
 Multidimensional scaling (MDS) is a dimension reduction technique that is most useful for visualizing 
 high-dimensional data during the exploratory phase. MDS "represents measurements of similarity 
 (or dissimilarity) among pairs of objects as distances between points." Simply put, objects closer
@@ -126,6 +126,7 @@ ggplot(df_euclidean, aes(x=Z1,y=Z2),main='Main') +
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
+
 The code below performs MDS using Manhattan distance and then plots the resulting coordinates.
 ```{r}
 # Manhattan Distance
@@ -143,6 +144,7 @@ ggplot(df_manhattan, aes(x=Z1,y=Z2),main='Main') +
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
+
 The code below performs MDS using Maximum distance and then plots the resulting coordinates.
 ```{r}
 # Maximum Distance 
@@ -160,6 +162,7 @@ ggplot(df_maximum, aes(x=Z1,y=Z2),main='Main') +
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
+
 The code below performs MDS using the correlation-based dissimilarity measure and then plots the resulting coordinates.
 ```{r}
 # Correlation
@@ -366,6 +369,13 @@ mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
 ![Correlation](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_correlation_MDS.png)
 
 ## Conclusion
+MDS is a convenient way to learn about data. Using this technique, we were able to condense the information provided by
+15 different variables into a simple two-dimensional plot. One can look at this plot and immediately draw conclusions.
+For example, the [Cadillac Seville](https://en.wikipedia.org/wiki/Cadillac_Seville#Fourth_generation_(1992%E2%80%931997)) 
+is consistently plotted close to the [Infiniti Q45](https://en.wikipedia.org/wiki/Infiniti_Q45#First_generation_G50),
+suggesting that the two models were very similar. Indeed, both were 5-passenger luxury midsize sedans with 8-cylinder engines 
+and even looked quite alike. Another way to use MDS is to look for clusters that can have important implications for
+additional analyses. 
 
 ## References
 https://en.wikipedia.org/wiki/Multidimensional_scaling \\
