@@ -295,19 +295,39 @@ ggplot(correlation_df, aes(x=Z1,y=Z2),main='Main') +
 ```
 
 ### Stata
-```stata1
+In this section we will use the Stata command `mds` to perform MDS on the Cars93 dataset. First, we import a CSV
+version of the data.
+```
 //Import data 
 import delim using "Cars93.csv", varnames(1) clear
+```
+The only variables with missing values are rearseatroom and luggageroom. We drop the observations containing these
+missing values. Because the missing values were encoded as "NA" strings, these two variables were imported as
+string variables, and we have to destring these variables to make them numeric before continuing onto our analysis.
+```
 //Drop observations with missing values in rearseatroom or luggageroom
 drop if rearseatroom == "NA" | luggageroom == "NA"
 destring rearseatroom luggageroom, replace
+```
+This step is not necessary, but to save ourselves from having to use the lengthy list of variables twice
+in the upcoming `mds` step, we store our variables of interest in a macro. Remember that Stata macros only
+exist temporarily, so you would not want run this code separately from the following code.
+```
 //Macro of continuous variables
 local varlist minprice price maxprice mpgcity mpghighway enginesize /*
 	*/ horsepower rpm revpermile fueltankcapacity length wheelbase width /*
 	*/ turncircle rearseatroom luggageroom weight
 ```
-
-```stata2
+Lastly, we perform MDS using the `mds` command. This command uses our list of variables plus some very important
+options. The 'id' option is used to identify unique observations and label them when plotted. The 'std' option
+standardizes the variables so that they are all given equal weight. We also rely on the default value of 'classical'
+for the 'method' option to ensure classical MDS is performed. Alternatively we could have specified 'strain' for
+the 'loss' option and 'identity' for the 'transform' option to perform classical MDS. Finally, you will see us
+use the 'measure' option to specify the dissimarlity measure (the default is Euclidean). It is also worth noting 
+that `mds` has an additional option, dimension, which is used to specify the dimensionality of the resulting coordinates. 
+We chose the default of 2 dimensions because it is easiest to visualize. However, using more dimensions can better
+approximate the original data. The code below performs MDS using Euclidian distance and then plots the resulting coordinates.
+```
 //MDS: Euclidean distances
 mds `varlist', id(model) std(`varlist') noplot
 mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
@@ -315,7 +335,9 @@ mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
 
 ![Euclidean](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_euclidean_MDS.png)
 
-```stata3
+The code below performs MDS using Manhattan distance (as the 'measure' option is specificed as 'manhattan') 
+and then plots the resulting coordinates.
+```
 //MDS: Manhattan distances
 mds `varlist', id(model) std(`varlist') measure(manhattan) noplot
 mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
@@ -323,7 +345,9 @@ mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
 
 ![Manhattan](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_manhattan_MDS.png)
 
-```stata4
+The code below performs MDS using Maximum distance (as the 'measure' option is specified as 'maximum')
+and then plots the resulting coordinates.
+```
 //MDS: Maximum distances
 mds `varlist', id(model) std(`varlist') measure(maximum) noplot
 mdsconfig, autoaspect xnegate ynegate msize(vsmall) mlabsize(vsmall)
@@ -331,8 +355,10 @@ mdsconfig, autoaspect xnegate ynegate msize(vsmall) mlabsize(vsmall)
 
 ![Maximum](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_maximum_MDS.png)
 
-```stata5
-//MDS: Correlation distances
+The code below performs MDS using the correlation-based dissimilarity measure (as the 'measure' option
+is specified as 'correlation') and then plots the resulting coordinates.
+```
+//MDS: Correlation
 mds `varlist', id(model) std(`varlist') measure(correlation) noplot
 mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
 ```
