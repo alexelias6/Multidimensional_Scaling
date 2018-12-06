@@ -40,7 +40,7 @@ The variables we will be using for MDS are presented in Table 1.
 ```{r variables, include = FALSE }
 
 library(knitr)
-variables = read.csv('mds_variables.csv')
+variables = read.csv('https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/mds_variables.csv')
 ```
 
 ```{r, table}
