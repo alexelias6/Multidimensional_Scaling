@@ -27,15 +27,27 @@ capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.t
 Our three examples will involve briefly cleaning the data, calculating dissimilarities among our chosen variables in four 
 different ways, performing classical MDS, and plotting the resulting coordinates in two-dimensional space. 
 The four measures of dissimilarity we will be using are Euclidean distance, Manhattan distance, Maximum distance, 
-and a dissimilarity measure based on the correlation matrix. Euclidean distance is calculated as:
+and a dissimilarity measure based on the correlation matrix. Euclidean distance between the attributes of objects $i$ and $j$ is calculated as: 
+\[
+\sqrt{(x_{i1} - x_{j1})^2 + (x_{i2} - x_{j2})^2 + \cdots + (x_{ik} - x_{jk})^2}
+\]
 
-Manhattan distance is calculated as:
+Manhattan distance between the attributes of objects $i$ and $j$ is calculated as: 
+\[
+|x_{i1} - x_{j1}| + |x_{i2} - x_{j2}| + \cdots + |x_{ik} - x_{jk}|
+\]
 
-Maximum distance is calculated as:
+Maximum distance between the attributes of objects $i$ and $j$ is calculated as: 
+\[
+\max(|x_{i1} - x_{j1}|, |x_{i2} - x_{j2}|,\ldots,|x_{ik} - x_{jk}|)
+\]
 
-The correlation-based measure of dissimilarity used by Stata (and implemented by us in R) is calculated as:
+The correlation-based measure of dissimilarity used by Stata (and implemented by us in R) for a matrix $X$ is calculated as: 
+\[
+\sqrt{2\cdot(1-corr(X))}
+\]
 
-The variables we will be using for MDS are presented in Table 1.
+The variables we will be using for MDS are presented in the table below.
 
 ```{r variables, include = FALSE }
 
@@ -43,7 +55,7 @@ library(knitr)
 variables = read.csv('https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/mds_variables.csv')
 ```
 
-```{r, table}
+```{r table, echo=FALSE}
 library(knitr)
 kable(variables)
 ```
