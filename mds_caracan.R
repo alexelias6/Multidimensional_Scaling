@@ -40,13 +40,7 @@ distance_correlation = sqrt(2*(1-cor(t(Cars93_cont_scaled))))
 torgerson_euclidean = torgerson(distance_euclidean)
 df_euclidean = data.frame(
   Z1=torgerson_euclidean[,1], Z2=torgerson_euclidean[,2], 
-  Manufacturer=Cars93$Manufacturer,
-  Model=Cars93$Model,
-  Type=Cars93$Type,
-  DriveTrain=Cars93$DriveTrain,
-  Cylinders=Cars93$Cylinders,
-  Passengers=Cars93$Passengers,
-  Origin=Cars93$Origin)
+  Model=Cars93$Model)
 ggplot(df_euclidean, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
@@ -58,13 +52,7 @@ ggplot(df_euclidean, aes(x=Z1,y=Z2),main='Main') +
 torgerson_manhattan = torgerson(distance_manhattan)
 df_manhattan = data.frame(
   Z1=torgerson_manhattan[,1], Z2=torgerson_manhattan[,2], 
-  Manufacturer=Cars93$Manufacturer,
-  Model=Cars93$Model,
-  Type=Cars93$Type,
-  DriveTrain=Cars93$DriveTrain,
-  Cylinders=Cars93$Cylinders,
-  Passengers=Cars93$Passengers,
-  Origin=Cars93$Origin)
+  Model=Cars93$Model)
 ggplot(df_manhattan, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
@@ -76,13 +64,7 @@ ggplot(df_manhattan, aes(x=Z1,y=Z2),main='Main') +
 torgerson_maximum = torgerson(distance_maximum)
 df_maximum = data.frame(
   Z1=torgerson_maximum[,1], Z2=torgerson_maximum[,2], 
-  Manufacturer=Cars93$Manufacturer,
-  Model=Cars93$Model,
-  Type=Cars93$Type,
-  DriveTrain=Cars93$DriveTrain,
-  Cylinders=Cars93$Cylinders,
-  Passengers=Cars93$Passengers,
-  Origin=Cars93$Origin)
+  Model=Cars93$Model)
 ggplot(df_maximum, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
@@ -94,13 +76,7 @@ ggplot(df_maximum, aes(x=Z1,y=Z2),main='Main') +
 torgerson_correlation = torgerson(distance_correlation)
 df_correlation = data.frame(
   Z1=torgerson_correlation[,1], Z2=torgerson_correlation[,2], 
-  Manufacturer=Cars93$Manufacturer,
-  Model=Cars93$Model,
-  Type=Cars93$Type,
-  DriveTrain=Cars93$DriveTrain,
-  Cylinders=Cars93$Cylinders,
-  Passengers=Cars93$Passengers,
-  Origin=Cars93$Origin)
+  Model=Cars93$Model)
 ggplot(df_correlation, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
