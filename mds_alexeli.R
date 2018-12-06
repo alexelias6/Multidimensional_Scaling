@@ -14,15 +14,14 @@ library(ggplot2)
 
 # 80: -------------------------------------------------------------------------- 
 
-# Get data
-
+# Data
 cars93 = 
   as_tibble(Cars93)
 
-# Clean data
-
+# Drop missing values
 cars93 = filter(cars93,!is.na(Rear.seat.room) & !is.na(Luggage.room))
 
+# Select variables of interest
 cars93_scaled = 
   cars93 %>%
   select(Min.Price, Price, Max.Price,
@@ -34,19 +33,17 @@ cars93_scaled =
   scale() %>%
   as_tibble()
 
-
+# Dissimilarity matrices
 for (method in c('euclidean', 'manhattan', 'maximum')) {
   assign(paste("distance", method, sep='_'), dist(cars93_scaled, method = method))
 }
-
 distance_correlation = sqrt(2*(1-cor(t(cars93_scaled))))
 
 # 80: -------------------------------------------------------------------------- 
 
 # Euclidean Distance
-
 euclidean = cmdscale(distance_euclidean, k=2)
-  
+
 euclidean_df = data_frame(
   Z1=euclidean[,1], Z2=euclidean[,2], 
   Manufacturer=cars93$Manufacturer,
@@ -64,7 +61,6 @@ ggplot(euclidean_df, aes(x=Z1,y=Z2), main='Main') +
 # 80: --------------------------------------------------------------------------
 
 # Manhattan Distance
-
 manhattan = cmdscale(distance_manhattan, k=2)
 
 manhattan_df = data.frame(
