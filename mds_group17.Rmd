@@ -15,7 +15,8 @@ of MDS: metric, which deals with quantitative dissimilarities, and non-metric, w
 Strain, which is equivalent to performing eigenvalue decomposition on a Gram matrix constructed
 from the dissimilarity measure. When the dissimilarity measure is Euclidean distance, classical MDS is 
 the same as Principal Components Analysis. However, the dissimilarity measure need not be Euclidean 
-distance, as we demonstrate below. 
+distance, as we demonstrate below. Indeed, other dissimilarity measures may do a better job of 
+approximating the original data. 
 
 In this tutorial, we will use two R functions, `torgerson` from the `smacof` package and `cmdscale` from 
 the `stats` package (which is available in base R), plus the `mds` command from Stata, to perform 
