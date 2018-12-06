@@ -8,15 +8,14 @@ output: html_document
 ## Introduction to (Classical) Multidimensional Scaling
 Multidimensional scaling (MDS) is a dimension reduction technique that is most useful for visualizing 
 high-dimensional data during the exploratory phase. MDS "represents measurements of similarity 
-(or dissimilarity) among pairs of objects as distances between points" \[1]. Simply put, objects closer
+(or dissimilarity) among pairs of objects as distances between points." Simply put, objects closer
 together (in terms of MDS coordinates) are more similar than objects farther apart. There are two types
 of MDS: metric, which deals with quantitative dissimilarities, and non-metric, which deals with qualitative
 (ordinal) dissimilarities. Within metric MDS, classical MDS involves minimizing a loss function called 
 Strain, which is equivalent to performing eigenvalue decomposition on a Gram matrix constructed
 from the dissimilarity measure. When the dissimilarity measure is Euclidean distance, classical MDS is 
 the same as Principal Components Analysis. However, the dissimilarity measure need not be Euclidean 
-distance, as we demonstrate below. Indeed, other dissimilarity measures may do a better job of 
-approximating the original data. 
+distance, as we demonstrate below. 
 
 In this tutorial, we will use two R functions, `torgerson` from the `smacof` package and `cmdscale` from 
 the `stats` package (which is available in base R), plus the `mds` command from Stata, to perform 
@@ -32,7 +31,9 @@ capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.t
 Our three examples will involve briefly cleaning the data, calculating dissimilarities among our chosen variables in four 
 different ways, performing classical MDS, and plotting the resulting coordinates in two-dimensional space. 
 The four measures of dissimilarity we will be using are Euclidean distance, Manhattan distance, Maximum distance, 
-and a dissimilarity measure based on the correlation matrix. Euclidean distance between the attributes of objects $i$ and $j$ is calculated as: 
+and a dissimilarity measure based on the correlation matrix.  
+  
+Euclidean distance between the attributes of objects $i$ and $j$ is calculated as: 
 \[
 \sqrt{(x_{i1} - x_{j1})^2 + (x_{i2} - x_{j2})^2 + \cdots + (x_{ik} - x_{jk})^2}
 \]
@@ -55,7 +56,6 @@ The correlation-based measure of dissimilarity used by Stata (and implemented by
 The variables we will be using for MDS are presented in the table below.
 
 ```{r variables, include = FALSE }
-
 library(knitr)
 variables = read.csv('https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/mds_variables.csv')
 ```
@@ -103,7 +103,6 @@ can be used for MDS.
 for (method in c('euclidean', 'manhattan', 'maximum')) {
   assign(paste("distance", method, sep='_'), dist(Cars93_cont_scaled, method = method))
 }
-
 distance_correlation = sqrt(2*(1-cor(t(Cars93_cont_scaled))))
 ```
 Lastly, we perform MDS using the `torgerson` function from the `smacof` package. This function takes the dissimilarity 
@@ -160,7 +159,7 @@ ggplot(df_correlation, aes(x=Z1,y=Z2),main='Main') +
 
 
 ### R (`stats` & `dplyr`)
-In this section we will use R packages `stats` (included in base R) and `dplyr` to perform MDS on the Cars93 dataset. The `stats` package is used to implement various approaches for multidimensional scaling while `dplyr` is used for data manipulation. First, we load the appropriate libraries. 
+In this section, we will use R packages `stats` (included in base R) and `dplyr` to perform MDS on the Cars93 dataset. The `stats` package will be used for multidimensional scaling and the `dplyr` package will be used for data manipulation. The dataset, Cars 93, is stored in the `MASS` package. 
 ```{r}
 # Libraries
 library(MASS)
@@ -168,20 +167,20 @@ library(tidyverse)
 library(dplyr)
 library(ggplot2)
 ```
-The dataset for this example is stored in the `MASS` package. The following code loads the data in as class tibble which allows for data manipulation using the `dplyr` package.
+The following code loads the data in as class tibble so we can manipulate the data using `dplyr`.  
 ``` {r}
-# Get data
+# Data
 cars93 = 
   as_tibble(Cars93)
 ```
-The only variables with missing values are Rear.seat.room and Luggage.room. We drop the observations containing these
-missing values.
+The variables 'Rear.seat.room' and 'Luggage.room' have observations with missing values so we will drop those. 
 ```{r}
-# Clean data
+# Drop missing values
 cars93 = filter(cars93,!is.na(Rear.seat.room) & !is.na(Luggage.room))
 ```
-Next, we select our variables and standardize them using the `scale` function to give all variables equal weighting.
+We select our variables of interest and standardize them using the `scale` function to give all variables equal weighting.
 ```{r}
+# Select variables of interest
 cars93_scaled = 
   cars93 %>%
   select(Min.Price, Price, Max.Price,
@@ -193,19 +192,18 @@ cars93_scaled =
   scale() %>%
   as_tibble()
 ```
-Then we create different types of dissimilarity matrices using the code below. Any of these dissimilarity measures
-can be used for MDS. 
+Next, we create different types of dissimilarity matrices. As stated in the introduction, we are interested in Euclidean distance, Manhattan distance, Maximum distance, and a correlation matrix. 
 ```{r}
+# Dissimilarity matrices
 for (method in c('euclidean', 'manhattan', 'maximum')) {
   assign(paste("distance", method, sep='_'), dist(cars93_scaled, method = method))
 }
 distance_correlation = sqrt(2*(1-cor(t(cars93_scaled))))
 ```
-Lastly, we perform MDS using the `cmdscale` function from the `stats` package. This function takes the dissimilarity 
-matrix as its argument and performs classical MDS. It is worth noting that `cmdscale` has an optional argument, 
-k, which is used to specify the dimensionality of the resulting coordinates. We chose the default of 2 dimensions because 
-it is easiest to visualize. However, using more dimensions can better approximate the original data. The code below performs 
-MDS using Euclidian distance and then plots the resulting coordinates.
+
+Lastly, we perform MDS for each of the matrices above using the `cmdscale` function from the `stats` package. The `cmdscale` function accepts six arguments with the first two being 'd' and 'k'. The argument 'd' is a distance structure or in our case, a dissimilarity matrix. The argument 'k' represents the dimension we wish to use to represent the data. We chose to use the default 'k=2' because it is the easiest to visualize.  
+  
+The code below performs MDS using Euclidian distance and then plots the resulting coordinates.
 ```{r}
 # Euclidean Distance
 euclidean = cmdscale(distance_euclidean, k=2) 
@@ -216,6 +214,7 @@ ggplot(euclidean_df, aes(x=Z1,y=Z2), main='Main') +
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
+  
 The code below performs MDS using Manhattan distance and then plots the resulting coordinates.
 ```{r}
 # Manhattan Distance
@@ -226,7 +225,8 @@ manhattan_df = data.frame(
 ggplot(manhattan_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
-```
+``` 
+  
 The code below performs MDS using Maximum distance and then plots the resulting coordinates.
 ```{r}
 # Maximum Distance 
@@ -238,6 +238,7 @@ ggplot(maximum_df, aes(x=Z1,y=Z2),main='Main') +
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
+  
 The code below performs MDS using the correlation-based dissimilarity measure and then plots the resulting coordinates.
 ```{r}
 # Correlation
@@ -336,8 +337,7 @@ R's `smacof` and Stata's `mds`, can perform a different type of metric MDS calle
 "modern MDS." This involves minimizing a loss function called Stress instead of Strain.
 
 ## References
-\[1] https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1  
-\[2] https://en.wikipedia.org/wiki/Multidimensional_scaling  
-\[3] http://www-stat.wharton.upenn.edu/~buja/PAPERS/paper-mds-jcgs.pdf  
-\[4] https://www.stata.com/manuals13/mvmds.pdf
-
+https://en.wikipedia.org/wiki/Multidimensional_scaling  
+https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1  
+http://www-stat.wharton.upenn.edu/~buja/PAPERS/paper-mds-jcgs.pdf  
+https://www.stata.com/manuals13/mvmds.pdf
