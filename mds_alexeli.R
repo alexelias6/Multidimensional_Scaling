@@ -46,13 +46,7 @@ euclidean = cmdscale(distance_euclidean, k=2)
 
 euclidean_df = data_frame(
   Z1=euclidean[,1], Z2=euclidean[,2], 
-  Manufacturer=cars93$Manufacturer,
-  Model=cars93$Model,
-  Type=cars93$Type,
-  DriveTrain=cars93$DriveTrain,
-  Cylinders=cars93$Cylinders,
-  Passengers=cars93$Passengers,
-  Origin=cars93$Origin)
+  Model=cars93$Model)
 
 ggplot(euclidean_df, aes(x=Z1,y=Z2), main='Main') + 
   geom_point() + 
@@ -65,13 +59,7 @@ manhattan = cmdscale(distance_manhattan, k=2)
 
 manhattan_df = data.frame(
   Z1=manhattan[,1], Z2=manhattan[,2], 
-  Manufacturer=cars93$Manufacturer,
-  Model=cars93$Model,
-  Type=cars93$Type,
-  DriveTrain=cars93$DriveTrain,
-  Cylinders=cars93$Cylinders,
-  Passengers=cars93$Passengers,
-  Origin=cars93$Origin)
+  Model=cars93$Model)
 
 ggplot(manhattan_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
@@ -84,13 +72,7 @@ maximum = cmdscale(distance_maximum, k=2)
 
 maximum_df = data.frame(
   Z1=maximum[,1], Z2=maximum[,2], 
-  Manufacturer=cars93$Manufacturer,
-  Model=cars93$Model,
-  Type=cars93$Type,
-  DriveTrain=cars93$DriveTrain,
-  Cylinders=cars93$Cylinders,
-  Passengers=cars93$Passengers,
-  Origin=cars93$Origin)
+  Model=cars93$Model)
 
 ggplot(maximum_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
@@ -103,13 +85,7 @@ correlation = cmdscale(distance_correlation, k=2)
 
 correlation_df = data.frame(
   Z1=correlation[,1], Z2=correlation[,2], 
-  Manufacturer=cars93$Manufacturer,
-  Model=cars93$Model,
-  Type=cars93$Type,
-  DriveTrain=cars93$DriveTrain,
-  Cylinders=cars93$Cylinders,
-  Passengers=cars93$Passengers,
-  Origin=cars93$Origin)
+  Model=cars93$Model)
 
 ggplot(correlation_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
