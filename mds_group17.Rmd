@@ -168,19 +168,19 @@ library(dplyr)
 library(ggplot2)
 ```
 The dataset for this example is stored in the `MASS` package. The following code loads the data in as class tibble which allows for data manipulation using the `dplyr` package.
-```
+``` {r}
 # Get data
 cars93 = 
   as_tibble(Cars93)
 ```
 The only variables with missing values are Rear.seat.room and Luggage.room. We drop the observations containing these
 missing values.
-```
+```{r}
 # Clean data
 cars93 = filter(cars93,!is.na(Rear.seat.room) & !is.na(Luggage.room))
 ```
 Next, we select our variables and standardize them using the `scale` function to give all variables equal weighting.
-```
+```{r}
 cars93_scaled = 
   cars93 %>%
   select(Min.Price, Price, Max.Price,
@@ -194,7 +194,7 @@ cars93_scaled =
 ```
 Then we create different types of dissimilarity matrices using the code below. Any of these dissimilarity measures
 can be used for MDS. 
-```
+```{r}
 for (method in c('euclidean', 'manhattan', 'maximum')) {
   assign(paste("distance", method, sep='_'), dist(cars93_scaled, method = method))
 }
@@ -205,7 +205,7 @@ matrix as its argument and performs classical MDS. It is worth noting that `cmds
 k, which is used to specify the dimensionality of the resulting coordinates. We chose the default of 2 dimensions because 
 it is easiest to visualize. However, using more dimensions can better approximate the original data. The code below performs 
 MDS using Euclidian distance and then plots the resulting coordinates.
-```
+```{r}
 # Euclidean Distance
 euclidean = cmdscale(distance_euclidean, k=2) 
 euclidean_df = data_frame(
@@ -216,7 +216,7 @@ ggplot(euclidean_df, aes(x=Z1,y=Z2), main='Main') +
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
 The code below performs MDS using Manhattan distance and then plots the resulting coordinates.
-```
+```{r}
 # Manhattan Distance
 manhattan = cmdscale(distance_manhattan, k=2)
 manhattan_df = data.frame(
@@ -227,7 +227,7 @@ ggplot(manhattan_df, aes(x=Z1,y=Z2),main='Main') +
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
 The code below performs MDS using Maximum distance and then plots the resulting coordinates.
-```
+```{r}
 # Maximum Distance 
 maximum = cmdscale(distance_maximum, k=2)
 maximum_df = data.frame(
@@ -238,7 +238,7 @@ ggplot(maximum_df, aes(x=Z1,y=Z2),main='Main') +
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
 The code below performs MDS using the correlation-based dissimilarity measure and then plots the resulting coordinates.
-```
+```{r}
 # Correlation
 correlation = cmdscale(distance_correlation, k=2)
 correlation_df = data.frame(
