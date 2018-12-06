@@ -6,16 +6,33 @@ output: html_document
 ---
 
 ## Introduction to (Classical) Multidimensional Scaling
-Multidimensional scaling (MDS) is a dimension reduction technique that is most useful for visualizing high-dimensional data during the exploratory phase. According to authors Ingwer Borg and Patrick Groenen, MDS "represents measurements of similarity (or dissimilarity) among pairs of objects as distances between points."  Simply put, objects closer together (in terms of MDS coordinates) are more similar than objects farther apart. There are two types of MDS: metric, which deals with quantitative dissimilarities, and non-metric, which deals with qualitative (ordinal) dissimilarities. Within metric MDS, classical MDS involves minimizing a loss function called Strain, which is equivalent to performing eigenvalue decomposition on a Gram matrix constructed from the dissimilarity measure. When the dissimilarity measure is Euclidean distance, classical MDS is the same as Principal Components Analysis. However, the dissimilarity measure need not be Euclidean 
-distance, as we demonstrate below. 
+Multidimensional scaling (MDS) is a dimension reduction technique that is most useful for visualizing 
+high-dimensional data during the exploratory phase. MDS "represents measurements of similarity 
+(or dissimilarity) among pairs of objects as distances between points" \[1]. Simply put, objects closer
+together (in terms of MDS coordinates) are more similar than objects farther apart. There are two types
+of MDS: metric, which deals with quantitative dissimilarities, and non-metric, which deals with qualitative
+(ordinal) dissimilarities. Within metric MDS, classical MDS involves minimizing a loss function called 
+Strain, which is equivalent to performing eigenvalue decomposition on a Gram matrix constructed
+from the dissimilarity measure. When the dissimilarity measure is Euclidean distance, classical MDS is 
+the same as Principal Components Analysis. However, the dissimilarity measure need not be Euclidean 
+distance, as we demonstrate below. Indeed, other dissimilarity measures may do a better job of 
+approximating the original data. 
 
-In this tutorial, we will use two R functions, `torgerson` from the `smacof` package and `cmdscale` from the `stats` package (which is available in base R), plus the `mds` command from Stata, to perform classical MDS.
+In this tutorial, we will use two R functions, `torgerson` from the `smacof` package and `cmdscale` from 
+the `stats` package (which is available in base R), plus the `mds` command from Stata, to perform 
+classical MDS.
 
 ## Data Description
 
-The data used in the following examples come from the Cars93 dataset available in R's `MASS` package. The observations of the dataset are 93 randomly selected 1993 passenger car models listed in the Consumer Reports issue and PACE Buying Guide. Information contained in the dataset includes various automobile metrics such as price, horsepower, and luggage capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.txt?fbclid=IwAR19EJDNQzMMQOBe6ZC4t4li0zx0UpkDBAoSWDNWa3T54JXc-yfpPiPIqsk)
+The data used in the following examples come from the Cars93 dataset available in R's `MASS` package. The observations of
+the dataset are 93 randomly selected 1993 passenger car models listed in the Consumer Reports issue and PACE Buying Guide.
+Information contained in the dataset includes various automobile metrics such as price, horsepower, and luggage 
+capacity. For raw data click [here.](http://jse.amstat.org/datasets/93cars.dat.txt?fbclid=IwAR19EJDNQzMMQOBe6ZC4t4li0zx0UpkDBAoSWDNWa3T54JXc-yfpPiPIqsk)
 
-Our three examples will involve briefly cleaning the data, calculating dissimilarities among our chosen variables in four different ways, performing classical MDS, and plotting the resulting coordinates in two-dimensional space. The four measures of dissimilarity we will be using are Euclidean distance, Manhattan distance, Maximum distance, and a dissimilarity measure based on the correlation matrix.  
+Our three examples will involve briefly cleaning the data, calculating dissimilarities among our chosen variables in four 
+different ways, performing classical MDS, and plotting the resulting coordinates in two-dimensional space. 
+The four measures of dissimilarity we will be using are Euclidean distance, Manhattan distance, Maximum distance, 
+and a dissimilarity measure based on the correlation matrix.  
   
 Euclidean distance between the attributes of objects $i$ and $j$ is calculated as: 
 \[
@@ -140,7 +157,6 @@ ggplot(df_correlation, aes(x=Z1,y=Z2),main='Main') +
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
-
 
 ### R (`stats` & `dplyr`)
 In this section, we will use R packages `stats` (included in base R) and `dplyr` to perform MDS on the Cars93 dataset. The `stats` package will be used for multidimensional scaling and the `dplyr` package will be used for data manipulation. The dataset, Cars 93, is stored in the `MASS` package. 
@@ -321,7 +337,7 @@ R's `smacof` and Stata's `mds`, can perform a different type of metric MDS calle
 "modern MDS." This involves minimizing a loss function called Stress instead of Strain.
 
 ## References
-https://en.wikipedia.org/wiki/Multidimensional_scaling  
-https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1  
-http://www-stat.wharton.upenn.edu/~buja/PAPERS/paper-mds-jcgs.pdf  
-https://www.stata.com/manuals13/mvmds.pdf
+\[1] https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1  
+\[2] https://en.wikipedia.org/wiki/Multidimensional_scaling  
+\[3] http://www-stat.wharton.upenn.edu/~buja/PAPERS/paper-mds-jcgs.pdf  
+\[4] https://www.stata.com/manuals13/mvmds.pdf
