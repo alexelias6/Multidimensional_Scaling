@@ -1,7 +1,7 @@
 ---
 title: "Multidimensional Scaling"
 author: "Cara Cannella, Alexandra Elias, Alex Kremzier"
-date: "November 25, 2018"
+date: "December 7, 2018"
 output: html_document
 ---
 
@@ -66,7 +66,7 @@ kable(variables)
 
 ## Implementation {.tabset .tabset-fade}
 
-### R (smacof & data.table)
+### R (`smacof` & `data.table`)
 In this section we will use R packages `smacof` and `data.table` to perform MDS on the Cars93 dataset. The `smacof` package is used to implement various approaches for multidimensional scaling while `data.table` is used for data manipulation. First, we load the appropriate libraries. 
 ```{r, message=FALSE}
 # Libraries 
@@ -76,17 +76,17 @@ library(ggplot2)
 library(data.table)
 library(smacof)
 ```
-The dataset for this example is stored in the MASS package. The following code loads the data in as class data.table which allows for data manipulation using the `data.table` package.
+The dataset for this example is stored in the `MASS` package. The following code loads the data in as class data.table which allows for data manipulation using the `data.table` package.
 ```{r}
 # Get data
 Cars93 = as.data.table(MASS::Cars93)
 ```
-The only continuous variables with missing values are Rear.seat.room and Luggage.room. We drop the observations containing these
+The only variables with missing values are Rear.seat.room and Luggage.room. We drop the observations containing these
 missing values.
 ```{r}
 Cars93 = Cars93[!is.na(Rear.seat.room) & !is.na(Luggage.room)]
 ```
-Next, we standardize the variables using the scale() function to give all variables equal weighting.
+Next, we select our variables and standardize them using the `scale` function to give all variables equal weighting.
 ```{r}
 Cars93_cont_scaled = Cars93[,.(Min.Price, Price, Max.Price,
                                MPG.city, MPG.highway, EngineSize,
@@ -109,7 +109,7 @@ Lastly, we perform MDS using the `torgerson` function from the `smacof` package.
 matrix as its argument and performs classical MDS. It is worth noting that `torgeson` has an optional argument, 
 p, which is used to specify the dimensionality of the resulting coordinates. We chose the default of 2 dimensions because 
 it is easiest to visualize. However, using more dimensions can better approximate the original data. The code below performs 
-MDS using Euclidian distance.
+MDS using Euclidian distance and then plots the resulting coordinates.
 ```{r}
 # Euclidean Distance
 torgerson_euclidean = torgerson(distance_euclidean)
@@ -126,7 +126,7 @@ ggplot(df_euclidean, aes(x=Z1,y=Z2),main='Main') +
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
-The code below performs MDS using Manhattan distance.
+The code below performs MDS using Manhattan distance and then plots the resulting coordinates.
 ```{r}
 # Manhattan Distance
 torgerson_manhattan = torgerson(distance_manhattan)
@@ -143,7 +143,7 @@ ggplot(df_manhattan, aes(x=Z1,y=Z2),main='Main') +
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
-The code below performs MDS using Maximum distance.
+The code below performs MDS using Maximum distance and then plots the resulting coordinates.
 ```{r}
 # Maximum Distance 
 torgerson_maximum = torgerson(distance_maximum)
@@ -160,7 +160,7 @@ ggplot(df_maximum, aes(x=Z1,y=Z2),main='Main') +
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
-The code below performs MDS using the correlation-based dissimilarity measure.
+The code below performs MDS using the correlation-based dissimilarity measure and then plots the resulting coordinates.
 ```{r}
 # Correlation
 torgerson_correlation = torgerson(distance_correlation)
@@ -179,18 +179,29 @@ ggplot(df_correlation, aes(x=Z1,y=Z2),main='Main') +
 ```
 
 
-### R (Base R & dplyr)
+### R (`stats` & `dplyr`)
+In this section we will use R packages `stats` (included in base R) and `dplyr` to perform MDS on the Cars93 dataset. The `stats` package is used to implement various approaches for multidimensional scaling while `dplyr` is used for data manipulation. First, we load the appropriate libraries. 
 ```{r}
 # Libraries
 library(MASS)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
+```
+The dataset for this example is stored in the `MASS` package. The following code loads the data in as class tibble which allows for data manipulation using the `dplyr` package.
+```
 # Get data
 cars93 = 
   as_tibble(Cars93)
+```
+The only variables with missing values are Rear.seat.room and Luggage.room. We drop the observations containing these
+missing values.
+```
 # Clean data
 cars93 = filter(cars93,!is.na(Rear.seat.room) & !is.na(Luggage.room))
+```
+Next, we select our variables and standardize them using the `scale` function to give all variables equal weighting.
+```
 cars93_scaled = 
   cars93 %>%
   select(Min.Price, Price, Max.Price,
@@ -201,13 +212,23 @@ cars93_scaled =
          Luggage.room) %>%
   scale() %>%
   as_tibble()
+```
+Then we create different types of dissimilarity matrices using the code below. Any of these dissimilarity measures
+can be used for MDS. 
+```
 for (method in c('euclidean', 'manhattan', 'maximum')) {
   assign(paste("distance", method, sep='_'), dist(cars93_scaled, method = method))
 }
 distance_correlation = sqrt(2*(1-cor(t(cars93_scaled))))
+```
+Lastly, we perform MDS using the `cmdscale` function from the `stats` package. This function takes the dissimilarity 
+matrix as its argument and performs classical MDS. It is worth noting that `cmdscale` has an optional argument, 
+k, which is used to specify the dimensionality of the resulting coordinates. We chose the default of 2 dimensions because 
+it is easiest to visualize. However, using more dimensions can better approximate the original data. The code below performs 
+MDS using Euclidian distance and then plots the resulting coordinates.
+```
 # Euclidean Distance
-euclidean = cmdscale(distance_euclidean, k=2)
-  
+euclidean = cmdscale(distance_euclidean, k=2) 
 euclidean_df = data_frame(
   Z1=euclidean[,1], Z2=euclidean[,2], 
   Manufacturer=cars93$Manufacturer,
@@ -220,6 +241,9 @@ euclidean_df = data_frame(
 ggplot(euclidean_df, aes(x=Z1,y=Z2), main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
+```
+The code below performs MDS using Manhattan distance and then plots the resulting coordinates.
+```
 # Manhattan Distance
 manhattan = cmdscale(distance_manhattan, k=2)
 manhattan_df = data.frame(
@@ -234,6 +258,9 @@ manhattan_df = data.frame(
 ggplot(manhattan_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
+```
+The code below performs MDS using Maximum distance and then plots the resulting coordinates.
+```
 # Maximum Distance 
 maximum = cmdscale(distance_maximum, k=2)
 maximum_df = data.frame(
@@ -248,6 +275,9 @@ maximum_df = data.frame(
 ggplot(maximum_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
+```
+The code below performs MDS using the correlation-based dissimilarity measure and then plots the resulting coordinates.
+```
 # Correlation
 correlation = cmdscale(distance_correlation, k=2)
 correlation_df = data.frame(
