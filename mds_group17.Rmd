@@ -70,7 +70,7 @@ In order to incorporate information about rear seat room and luggage capacity, v
 Cars93 = Cars93[!is.na(Rear.seat.room) & !is.na(Luggage.room)]
 ```
 Next, standardize the variables using the scale() function to change all measures to the same scale.
-```
+```{r}
 Cars93_cont_scaled = Cars93[,.(Min.Price, Price, Max.Price,
                                MPG.city, MPG.highway, EngineSize,
                                Horsepower, RPM, Rev.per.mile,
