@@ -114,7 +114,8 @@ MDS using Euclidian distance and then plots the resulting coordinates.
 # Euclidean Distance
 torgerson_euclidean = torgerson(distance_euclidean)
 df_euclidean = data.frame(
-  Z1=torgerson_euclidean[,1], Z2=torgerson_euclidean[,2])
+  Z1=torgerson_euclidean[,1], Z2=torgerson_euclidean[,2],
+  Model=Cars93$Model)
 ggplot(df_euclidean, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
@@ -125,7 +126,8 @@ The code below performs MDS using Manhattan distance and then plots the resultin
 # Manhattan Distance
 torgerson_manhattan = torgerson(distance_manhattan)
 df_manhattan = data.frame(
-  Z1=torgerson_manhattan[,1], Z2=torgerson_manhattan[,2])
+  Z1=torgerson_manhattan[,1], Z2=torgerson_manhattan[,2],
+  Model=Cars93$Model)
 ggplot(df_manhattan, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
@@ -136,7 +138,8 @@ The code below performs MDS using Maximum distance and then plots the resulting 
 # Maximum Distance 
 torgerson_maximum = torgerson(distance_maximum)
 df_maximum = data.frame(
-  Z1=torgerson_maximum[,1], Z2=torgerson_maximum[,2])
+  Z1=torgerson_maximum[,1], Z2=torgerson_maximum[,2],
+  Model=Cars93$Model)
 ggplot(df_maximum, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
@@ -147,7 +150,8 @@ The code below performs MDS using the correlation-based dissimilarity measure an
 # Correlation
 torgerson_correlation = torgerson(distance_correlation)
 df_correlation = data.frame(
-  Z1=torgerson_correlation[,1], Z2=torgerson_correlation[,2])
+  Z1=torgerson_correlation[,1], Z2=torgerson_correlation[,2],
+  Model=Cars93$Model)
 ggplot(df_correlation, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
@@ -205,7 +209,8 @@ MDS using Euclidian distance and then plots the resulting coordinates.
 # Euclidean Distance
 euclidean = cmdscale(distance_euclidean, k=2) 
 euclidean_df = data_frame(
-  Z1=euclidean[,1], Z2=euclidean[,2])
+  Z1=euclidean[,1], Z2=euclidean[,2],
+  Model=Cars93$Model)
 ggplot(euclidean_df, aes(x=Z1,y=Z2), main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
@@ -215,7 +220,8 @@ The code below performs MDS using Manhattan distance and then plots the resultin
 # Manhattan Distance
 manhattan = cmdscale(distance_manhattan, k=2)
 manhattan_df = data.frame(
-  Z1=manhattan[,1], Z2=manhattan[,2])
+  Z1=manhattan[,1], Z2=manhattan[,2],
+  Model=Cars93$Model)
 ggplot(manhattan_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
@@ -225,7 +231,8 @@ The code below performs MDS using Maximum distance and then plots the resulting 
 # Maximum Distance 
 maximum = cmdscale(distance_maximum, k=2)
 maximum_df = data.frame(
-  Z1=maximum[,1], Z2=maximum[,2])
+  Z1=maximum[,1], Z2=maximum[,2],
+  Model=Cars93$Model)
 ggplot(maximum_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
@@ -235,7 +242,8 @@ The code below performs MDS using the correlation-based dissimilarity measure an
 # Correlation
 correlation = cmdscale(distance_correlation, k=2)
 correlation_df = data.frame(
-  Z1=correlation[,1], Z2=correlation[,2])
+  Z1=correlation[,1], Z2=correlation[,2],
+  Model=Cars93$Model)
 ggplot(correlation_df, aes(x=Z1,y=Z2),main='Main') + 
   geom_point() + 
   geom_text(aes(label=Model), hjust=-0.2, size=3)
