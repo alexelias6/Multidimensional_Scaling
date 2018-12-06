@@ -294,7 +294,7 @@ ggplot(correlation_df, aes(x=Z1,y=Z2),main='Main') +
   geom_text(aes(label=Model), hjust=-0.2, size=3)
 ```
 
-### Stata
+### Stata (`mds`)
 In this section we will use the Stata command `mds` to perform MDS on the Cars93 dataset. First, we import a CSV
 version of the data.
 ```
@@ -311,7 +311,7 @@ destring rearseatroom luggageroom, replace
 ```
 This step is not necessary, but to save ourselves from having to use the lengthy list of variables twice
 in the upcoming `mds` step, we store our variables of interest in a macro. Remember that Stata macros only
-exist temporarily, so you would not want run this code separately from the following code.
+exist temporarily, so you would not want run this code separately from the remaining code.
 ```
 //Macro of continuous variables
 local varlist minprice price maxprice mpgcity mpghighway enginesize /*
@@ -365,12 +365,11 @@ mdsconfig, autoaspect ynegate msize(vsmall) mlabsize(vsmall)
 
 ![Correlation](https://raw.githubusercontent.com/alexelias6/Multidimensional_Scaling/master/stata_correlation_MDS.png)
 
-## References
-https://en.wikipedia.org/wiki/Multidimensional_scaling
-https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1
-http://www-stat.wharton.upenn.edu/~buja/PAPERS/paper-mds-jcgs.pdf
-https://www.stata.com/manuals13/mvmds.pdf
+## Conclusion
 
-## To Do
-* Make graphs visually appealing
+## References
+https://en.wikipedia.org/wiki/Multidimensional_scaling \\
+https://link.springer.com/chapter/10.1007/978-1-4757-2711-1_1 \\
+http://www-stat.wharton.upenn.edu/~buja/PAPERS/paper-mds-jcgs.pdf \\
+https://www.stata.com/manuals13/mvmds.pdf
 
